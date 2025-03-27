@@ -1,0 +1,22 @@
+version = "0.1.0-SNAPSHOT"
+
+extra["name"] = "Charon Activity Diagram Module"
+extra["description"] = "Diagram sub module"
+
+dependencies {
+    api("org.eclipse.emf:org.eclipse.emf.common:2.41.0")
+    api("org.eclipse.emf:org.eclipse.emf.ecore:2.38.0")
+    api("com.google.code.gson:gson:2.10.1")
+    api(project(":org.eclipse.glsp.server"))
+    api("org.eclipse.elk:org.eclipse.elk.core:0.8.1") {
+        exclude("log4j", "log4j")
+    }
+    api("org.eclipse.elk:org.eclipse.elk.graph.text:0.8.1") {
+        exclude("log4j", "log4j")
+    }
+}
+
+tasks.test {
+    useJUnitPlatform()
+}
+
