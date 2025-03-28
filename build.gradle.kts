@@ -5,7 +5,7 @@ plugins {
 }
 
 subprojects {
-    group = "org.eclipse.glsp"
+    group = "com.gr72s.glsp"
 
     apply(plugin = "java-library")
     apply(plugin = "org.jetbrains.kotlin.jvm")

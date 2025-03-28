@@ -9,12 +9,12 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/examples/org.eclipse.glsp.example.workflow" />
-            <option value="$PROJECT_DIR$/plugins/org.eclipse.glsp.graph" />
-            <option value="$PROJECT_DIR$/plugins/org.eclipse.glsp.layout" />
-            <option value="$PROJECT_DIR$/plugins/org.eclipse.glsp.server" />
-            <option value="$PROJECT_DIR$/plugins/org.eclipse.glsp.server.emf" />
-            <option value="$PROJECT_DIR$/plugins/org.eclipse.glsp.server.websocket" />
+            <option value="$PROJECT_DIR$/examples/example.workflow" />
+            <option value="$PROJECT_DIR$/plugins/graph" />
+            <option value="$PROJECT_DIR$/plugins/layout" />
+            <option value="$PROJECT_DIR$/plugins/server" />
+            <option value="$PROJECT_DIR$/plugins/server.emf" />
+            <option value="$PROJECT_DIR$/plugins/server.websocket" />
           </set>
         </option>
       </GradleProjectSettings>

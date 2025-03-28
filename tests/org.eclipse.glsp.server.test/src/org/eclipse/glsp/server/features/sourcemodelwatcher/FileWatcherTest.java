@@ -13,7 +13,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.eclipse.glsp.server.features.sourcemodelwatcher;
+package com.gr72s.glsp.server.features.sourcemodelwatcher;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -33,16 +33,16 @@ import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
-import org.eclipse.glsp.server.actions.Action;
-import org.eclipse.glsp.server.actions.ActionDispatcher;
-import org.eclipse.glsp.server.disposable.Disposable;
-import org.eclipse.glsp.server.model.DefaultGModelState;
-import org.eclipse.glsp.server.model.GModelState;
-import org.eclipse.glsp.server.protocol.InitializeClientSessionParameters;
-import org.eclipse.glsp.server.session.ClientSession;
-import org.eclipse.glsp.server.session.ClientSessionListener;
-import org.eclipse.glsp.server.session.ClientSessionManager;
-import org.eclipse.glsp.server.utils.ClientOptionsUtil;
+import com.gr72s.glsp.server.actions.Action;
+import com.gr72s.glsp.server.actions.ActionDispatcher;
+import com.gr72s.glsp.server.disposable.Disposable;
+import com.gr72s.glsp.server.model.DefaultGModelState;
+import com.gr72s.glsp.server.model.GModelState;
+import com.gr72s.glsp.server.protocol.InitializeClientSessionParameters;
+import com.gr72s.glsp.server.session.ClientSession;
+import com.gr72s.glsp.server.session.ClientSessionListener;
+import com.gr72s.glsp.server.session.ClientSessionManager;
+import com.gr72s.glsp.server.utils.ClientOptionsUtil;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -13,7 +13,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.eclipse.glsp.server.internal.util;
+package com.gr72s.glsp.server.internal.util;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -24,169 +24,171 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-import org.eclipse.glsp.server.actions.Action;
-import org.eclipse.glsp.server.actions.RequestAction;
-import org.eclipse.glsp.server.actions.ResponseAction;
-import org.eclipse.glsp.server.features.core.model.RequestBoundsAction;
-import org.eclipse.glsp.server.features.core.model.RequestModelAction;
-import org.eclipse.glsp.server.features.core.model.SetBoundsAction;
-import org.eclipse.glsp.server.features.core.model.SetModelAction;
-import org.eclipse.glsp.server.features.directediting.ApplyLabelEditOperation;
-import org.eclipse.glsp.server.gmodel.GModelApplyLabelEditOperationHandler;
-import org.eclipse.glsp.server.gmodel.GModelCreateEdgeOperationHandler;
-import org.eclipse.glsp.server.gmodel.GModelReconnectEdgeOperationHandler;
-import org.eclipse.glsp.server.operations.CreateEdgeOperation;
-import org.eclipse.glsp.server.operations.Operation;
-import org.eclipse.glsp.server.operations.ReconnectEdgeOperation;
-import org.eclipse.glsp.server.types.GLSPServerException;
+import com.gr72s.glsp.server.actions.Action;
+import com.gr72s.glsp.server.actions.RequestAction;
+import com.gr72s.glsp.server.actions.ResponseAction;
+import com.gr72s.glsp.server.features.core.model.RequestBoundsAction;
+import com.gr72s.glsp.server.features.core.model.RequestModelAction;
+import com.gr72s.glsp.server.features.core.model.SetBoundsAction;
+import com.gr72s.glsp.server.features.core.model.SetModelAction;
+import com.gr72s.glsp.server.features.directediting.ApplyLabelEditOperation;
+import com.gr72s.glsp.server.gmodel.GModelApplyLabelEditOperationHandler;
+import com.gr72s.glsp.server.gmodel.GModelCreateEdgeOperationHandler;
+import com.gr72s.glsp.server.gmodel.GModelReconnectEdgeOperationHandler;
+import com.gr72s.glsp.server.operations.CreateEdgeOperation;
+import com.gr72s.glsp.server.operations.Operation;
+import com.gr72s.glsp.server.operations.ReconnectEdgeOperation;
+import com.gr72s.glsp.server.types.GLSPServerException;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 public class GenericsUtilTest {
 
-   public static class MyResponseAction extends ResponseAction {
-      public MyResponseAction() {
-         super("custom");
-      }
+    public static class MyResponseAction extends ResponseAction {
+        public MyResponseAction() {
+            super("custom");
+        }
 
-      @Override
-      public int hashCode() {
-         return Objects.hash(getKind());
-      }
+        @Override
+        public int hashCode() {
+            return Objects.hash(getKind());
+        }
 
-      @Override
-      public boolean equals(final Object obj) {
-         if (this == obj) {
-            return true;
-         }
-         if (!(obj instanceof MyResponseAction)) {
-            return false;
-         }
-         Action other = (MyResponseAction) obj;
-         return Objects.equals(getKind(), other.getKind());
-      }
-   }
+        @Override
+        public boolean equals(final Object obj) {
+            if (this == obj) {
+                return true;
+            }
+            if (!(obj instanceof MyResponseAction)) {
+                return false;
+            }
+            Action other = (MyResponseAction) obj;
+            return Objects.equals(getKind(), other.getKind());
+        }
+    }
 
-   public static class MyResponseActionExt extends MyResponseAction {}
+    public static class MyResponseActionExt extends MyResponseAction {
+    }
 
-   public abstract static class IntermediateRequestAction<T extends MyResponseAction> extends RequestAction<T> {
-      public IntermediateRequestAction(final String kind) {
-         super(kind);
-      }
-   }
+    public abstract static class IntermediateRequestAction<T extends MyResponseAction> extends RequestAction<T> {
+        public IntermediateRequestAction(final String kind) {
+            super(kind);
+        }
+    }
 
-   public static class MyRequestAction extends IntermediateRequestAction<MyResponseAction> {
-      public MyRequestAction() {
-         super("myrequest");
-      }
-   }
+    public static class MyRequestAction extends IntermediateRequestAction<MyResponseAction> {
+        public MyRequestAction() {
+            super("myrequest");
+        }
+    }
 
-   public static class MySubRequestAction extends MyRequestAction {}
+    public static class MySubRequestAction extends MyRequestAction {
+    }
 
-   public static class MyRequestActionExt extends IntermediateRequestAction<MyResponseActionExt> {
-      public MyRequestActionExt() {
-         super("myrequestext");
-      }
-   }
+    public static class MyRequestActionExt extends IntermediateRequestAction<MyResponseActionExt> {
+        public MyRequestActionExt() {
+            super("myrequestext");
+        }
+    }
 
-   private static Stream<Arguments> matchingRequestResponse() {
-      return Stream.of(
-         arguments(MyRequestAction.class, MyResponseAction.class),
-         arguments(MySubRequestAction.class, MyResponseAction.class),
-         arguments(MyRequestActionExt.class, MyResponseActionExt.class),
-         arguments(RequestModelAction.class, SetModelAction.class),
-         arguments(RequestBoundsAction.class, SetBoundsAction.class));
-   }
+    private static Stream<Arguments> matchingRequestResponse() {
+        return Stream.of(
+                arguments(MyRequestAction.class, MyResponseAction.class),
+                arguments(MySubRequestAction.class, MyResponseAction.class),
+                arguments(MyRequestActionExt.class, MyResponseActionExt.class),
+                arguments(RequestModelAction.class, SetModelAction.class),
+                arguments(RequestBoundsAction.class, SetBoundsAction.class));
+    }
 
-   @ParameterizedTest
-   @MethodSource
-   void matchingRequestResponse(final Class<?> requestClass, final Class<?> expectedResponseClass)
-      throws IOException, InterruptedException {
-      assertEquals(expectedResponseClass, GenericsUtil.getActualTypeArgument(requestClass, ResponseAction.class));
-   }
+    @ParameterizedTest
+    @MethodSource
+    void matchingRequestResponse(final Class<?> requestClass, final Class<?> expectedResponseClass)
+            throws IOException, InterruptedException {
+        assertEquals(expectedResponseClass, GenericsUtil.getActualTypeArgument(requestClass, ResponseAction.class));
+    }
 
-   private static Stream<Arguments> matchingOperationHandler() {
-      return Stream.of(
-         arguments(GModelApplyLabelEditOperationHandler.class, ApplyLabelEditOperation.class),
-         arguments(GModelCreateEdgeOperationHandler.class, CreateEdgeOperation.class),
-         arguments(GModelReconnectEdgeOperationHandler.class, ReconnectEdgeOperation.class));
-   }
+    private static Stream<Arguments> matchingOperationHandler() {
+        return Stream.of(
+                arguments(GModelApplyLabelEditOperationHandler.class, ApplyLabelEditOperation.class),
+                arguments(GModelCreateEdgeOperationHandler.class, CreateEdgeOperation.class),
+                arguments(GModelReconnectEdgeOperationHandler.class, ReconnectEdgeOperation.class));
+    }
 
-   @ParameterizedTest
-   @MethodSource
-   void matchingOperationHandler(final Class<?> handlerClass, final Class<?> expectedOperationClass)
-      throws IOException, InterruptedException {
-      assertEquals(expectedOperationClass, GenericsUtil.getActualTypeArgument(handlerClass, Operation.class));
-   }
+    @ParameterizedTest
+    @MethodSource
+    void matchingOperationHandler(final Class<?> handlerClass, final Class<?> expectedOperationClass)
+            throws IOException, InterruptedException {
+        assertEquals(expectedOperationClass, GenericsUtil.getActualTypeArgument(handlerClass, Operation.class));
+    }
 
-   @ParameterizedTest
-   @MethodSource
-   void erroneousMatching(final Class<?> handlerClass, final Class<?> baseType)
-      throws IOException, InterruptedException {
-      assertThrows(GLSPServerException.class, () -> GenericsUtil.getActualTypeArgument(handlerClass, baseType));
-   }
+    @ParameterizedTest
+    @MethodSource
+    void erroneousMatching(final Class<?> handlerClass, final Class<?> baseType)
+            throws IOException, InterruptedException {
+        assertThrows(GLSPServerException.class, () -> GenericsUtil.getActualTypeArgument(handlerClass, baseType));
+    }
 
-   private static Stream<Arguments> erroneousMatching() {
-      return Stream.of(
-         arguments(RequestBoundsAction.class, Operation.class),
-         arguments(GModelApplyLabelEditOperationHandler.class, ResponseAction.class),
-         arguments(RequestModelAction.class, MyResponseActionExt.class));
-   }
+    private static Stream<Arguments> erroneousMatching() {
+        return Stream.of(
+                arguments(RequestBoundsAction.class, Operation.class),
+                arguments(GModelApplyLabelEditOperationHandler.class, ResponseAction.class),
+                arguments(RequestModelAction.class, MyResponseActionExt.class));
+    }
 
-   @ParameterizedTest
-   @MethodSource
-   void matchFinding(final Class<?> clazz, final Class<?> baseType, final Optional<Class<?>> expectedResult)
-      throws IOException, InterruptedException {
-      assertEquals(expectedResult, GenericsUtil.findActualTypeArgument(clazz, baseType));
-   }
+    @ParameterizedTest
+    @MethodSource
+    void matchFinding(final Class<?> clazz, final Class<?> baseType, final Optional<Class<?>> expectedResult)
+            throws IOException, InterruptedException {
+        assertEquals(expectedResult, GenericsUtil.findActualTypeArgument(clazz, baseType));
+    }
 
-   private static Stream<Arguments> matchFinding() {
-      return Stream.of(
-         arguments(MyRequestAction.class, ResponseAction.class, Optional.of(MyResponseAction.class)),
-         arguments(MySubRequestAction.class, ResponseAction.class, Optional.of(MyResponseAction.class)),
-         arguments(MyRequestActionExt.class, ResponseAction.class, Optional.of(MyResponseActionExt.class)),
-         arguments(RequestModelAction.class, ResponseAction.class, Optional.of(SetModelAction.class)),
-         arguments(RequestModelAction.class, MyResponseActionExt.class, Optional.empty()),
-         arguments(GModelApplyLabelEditOperationHandler.class, Operation.class,
-            Optional.of(ApplyLabelEditOperation.class)),
-         arguments(GModelCreateEdgeOperationHandler.class, Operation.class,
-            Optional.of(CreateEdgeOperation.class)),
-         arguments(GModelCreateEdgeOperationHandler.class, ResponseAction.class, Optional.empty()),
-         arguments(null, null, Optional.empty()),
-         arguments(MyRequestAction.class, null, Optional.empty()),
-         arguments(null, ResponseAction.class, Optional.empty()));
-   }
+    private static Stream<Arguments> matchFinding() {
+        return Stream.of(
+                arguments(MyRequestAction.class, ResponseAction.class, Optional.of(MyResponseAction.class)),
+                arguments(MySubRequestAction.class, ResponseAction.class, Optional.of(MyResponseAction.class)),
+                arguments(MyRequestActionExt.class, ResponseAction.class, Optional.of(MyResponseActionExt.class)),
+                arguments(RequestModelAction.class, ResponseAction.class, Optional.of(SetModelAction.class)),
+                arguments(RequestModelAction.class, MyResponseActionExt.class, Optional.empty()),
+                arguments(GModelApplyLabelEditOperationHandler.class, Operation.class,
+                        Optional.of(ApplyLabelEditOperation.class)),
+                arguments(GModelCreateEdgeOperationHandler.class, Operation.class,
+                        Optional.of(CreateEdgeOperation.class)),
+                arguments(GModelCreateEdgeOperationHandler.class, ResponseAction.class, Optional.empty()),
+                arguments(null, null, Optional.empty()),
+                arguments(MyRequestAction.class, null, Optional.empty()),
+                arguments(null, ResponseAction.class, Optional.empty()));
+    }
 
-   @ParameterizedTest
-   @MethodSource
-   void asActualTypeArgument(final Class<?> clazz, final Class<?> baseType, final Object typeObject,
-      final Object expectedResult)
-      throws IOException, InterruptedException {
-      assertEquals(expectedResult, GenericsUtil.asActualTypeArgument(clazz, baseType, typeObject));
-   }
+    @ParameterizedTest
+    @MethodSource
+    void asActualTypeArgument(final Class<?> clazz, final Class<?> baseType, final Object typeObject,
+                              final Object expectedResult)
+            throws IOException, InterruptedException {
+        assertEquals(expectedResult, GenericsUtil.asActualTypeArgument(clazz, baseType, typeObject));
+    }
 
-   private static Stream<Arguments> asActualTypeArgument() {
-      return Stream.of(
-         arguments(MyRequestAction.class, ResponseAction.class, new MyResponseAction(),
-            Optional.of(new MyResponseAction())),
-         arguments(MyRequestAction.class, MyResponseAction.class, new MyResponseAction(),
-            Optional.of(new MyResponseAction())),
-         arguments(MyRequestAction.class, ResponseAction.class, new MyResponseActionExt(),
-            Optional.of(new MyResponseActionExt())),
-         arguments(MyRequestAction.class, MyResponseAction.class, new MyResponseActionExt(),
-            Optional.of(new MyResponseActionExt())),
-         arguments(MyRequestAction.class, MyResponseActionExt.class, new MyResponseActionExt(),
-            Optional.empty()),
-         arguments(MyRequestActionExt.class, ResponseAction.class, new MyResponseActionExt(),
-            Optional.of(new MyResponseActionExt())),
-         arguments(MyRequestActionExt.class, MyResponseAction.class, new MyResponseActionExt(),
-            Optional.of(new MyResponseActionExt())),
-         arguments(MyRequestActionExt.class, MyResponseActionExt.class, new MyResponseActionExt(),
-            Optional.of(new MyResponseActionExt())),
-         arguments(MyRequestActionExt.class, Operation.class, new MyResponseActionExt(),
-            Optional.empty()),
-         arguments(MyRequestActionExt.class, Object.class, new MyResponseActionExt(),
-            Optional.of(new MyResponseActionExt())));
-   }
+    private static Stream<Arguments> asActualTypeArgument() {
+        return Stream.of(
+                arguments(MyRequestAction.class, ResponseAction.class, new MyResponseAction(),
+                        Optional.of(new MyResponseAction())),
+                arguments(MyRequestAction.class, MyResponseAction.class, new MyResponseAction(),
+                        Optional.of(new MyResponseAction())),
+                arguments(MyRequestAction.class, ResponseAction.class, new MyResponseActionExt(),
+                        Optional.of(new MyResponseActionExt())),
+                arguments(MyRequestAction.class, MyResponseAction.class, new MyResponseActionExt(),
+                        Optional.of(new MyResponseActionExt())),
+                arguments(MyRequestAction.class, MyResponseActionExt.class, new MyResponseActionExt(),
+                        Optional.empty()),
+                arguments(MyRequestActionExt.class, ResponseAction.class, new MyResponseActionExt(),
+                        Optional.of(new MyResponseActionExt())),
+                arguments(MyRequestActionExt.class, MyResponseAction.class, new MyResponseActionExt(),
+                        Optional.of(new MyResponseActionExt())),
+                arguments(MyRequestActionExt.class, MyResponseActionExt.class, new MyResponseActionExt(),
+                        Optional.of(new MyResponseActionExt())),
+                arguments(MyRequestActionExt.class, Operation.class, new MyResponseActionExt(),
+                        Optional.empty()),
+                arguments(MyRequestActionExt.class, Object.class, new MyResponseActionExt(),
+                        Optional.of(new MyResponseActionExt())));
+    }
 }

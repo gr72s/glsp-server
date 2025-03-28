@@ -13,11 +13,11 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.eclipse.glsp.graph;
+package com.gr72s.glsp.graph;
 
-import static org.eclipse.glsp.graph.GraphPackage.Literals.GEDGE;
-import static org.eclipse.glsp.graph.GraphPackage.Literals.GGRAPH;
-import static org.eclipse.glsp.graph.GraphPackage.Literals.GNODE;
+import static com.gr72s.glsp.graph.GraphPackage.Literals.GEDGE;
+import static com.gr72s.glsp.graph.GraphPackage.Literals.GGRAPH;
+import static com.gr72s.glsp.graph.GraphPackage.Literals.GNODE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.glsp.graph.gson.GraphGsonConfigurator;
+import com.gr72s.glsp.graph.gson.GraphGsonConfigurator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

@@ -13,14 +13,14 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.eclipse.glsp.graph.impl;
+package com.gr72s.glsp.graph.impl;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.eclipse.glsp.graph.GEdge;
-import org.eclipse.glsp.graph.GGraph;
-import org.eclipse.glsp.graph.GNode;
-import org.eclipse.glsp.graph.GraphFactory;
+import com.gr72s.glsp.graph.GEdge;
+import com.gr72s.glsp.graph.GGraph;
+import com.gr72s.glsp.graph.GNode;
+import com.gr72s.glsp.graph.GraphFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
