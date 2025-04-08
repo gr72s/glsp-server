@@ -1,27 +1,25 @@
 /**
  *  Copyright (c) 2019-2022 EclipseSource and others.
- * 
+ *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
  * https://www.eclipse.org/legal/epl-2.0.
- * 
+ *
  * This Source Code may also be made available under the following Secondary
  * Licenses when the conditions for such availability set forth in the Eclipse
  * Public License v. 2.0 are satisfied: GNU General Public License, version 2
  *  with the GNU Classpath Exception which is available at
  *  https://www.gnu.org/software/classpath/license.html.
- * 
+ *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  *  ********************************************************************************
  */
 package com.gr72s.glsp.graph.impl;
 
-import com.gr72s.glsp.graph.GEdge;
-import com.gr72s.glsp.graph.GModelElement;
-import com.gr72s.glsp.graph.GPoint;
-import com.gr72s.glsp.graph.GraphPackage;
+import com.gr72s.glsp.graph.*;
 
 import java.util.Collection;
+import java.util.Optional;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -410,6 +408,9 @@ public class GEdgeImpl extends GArgumentableImpl implements GEdge {
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, GraphPackage.GEDGE__SOURCE_ID, oldSourceId,
 					sourceId));
+		GModelElement oldSource = findElement(oldSourceId).orElse(null);
+		GModelElement newSource = findElement(newSourceId).orElse(null);
+		eNotify(new ENotificationImpl(this, Notification.SET, GraphPackage.GEDGE__SOURCE, oldSource, newSource));
 	}
 
 	/**
@@ -434,6 +435,9 @@ public class GEdgeImpl extends GArgumentableImpl implements GEdge {
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, GraphPackage.GEDGE__TARGET_ID, oldTargetId,
 					targetId));
+        GModelElement oldTarget = findElement(oldTargetId).orElse(null);
+        GModelElement newTarget = findElement(newTargetId).orElse(null);
+        eNotify(new ENotificationImpl(this, Notification.SET, GraphPackage.GEDGE__TARGET, oldTarget, newTarget));
 	}
 
 	/**
@@ -453,10 +457,7 @@ public class GEdgeImpl extends GArgumentableImpl implements GEdge {
 	 * @generated
 	 */
 	public GModelElement basicGetSource() {
-		// TODO: implement this method to return the 'Source' reference
-		// -> do not perform proxy resolution
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
+		return findElement(this.getSourceId()).orElse(null);
 	}
 
 	/**
@@ -466,10 +467,12 @@ public class GEdgeImpl extends GArgumentableImpl implements GEdge {
 	 */
 	@Override
 	public void setSource(GModelElement newSource) {
-		// TODO: implement this method to set the 'Source' reference
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
+        setSourceId(newSource == null ? null : newSource.getId());
 	}
+
+    protected Optional<GModelElement> findElement(final String elementId) {
+        return GModelIndex.get(this).get(elementId);
+    }
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -488,10 +491,7 @@ public class GEdgeImpl extends GArgumentableImpl implements GEdge {
 	 * @generated
 	 */
 	public GModelElement basicGetTarget() {
-		// TODO: implement this method to return the 'Target' reference
-		// -> do not perform proxy resolution
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
+        return findElement(this.getTargetId()).orElse(null);
 	}
 
 	/**
@@ -501,9 +501,7 @@ public class GEdgeImpl extends GArgumentableImpl implements GEdge {
 	 */
 	@Override
 	public void setTarget(GModelElement newTarget) {
-		// TODO: implement this method to set the 'Target' reference
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
+        setTargetId(newTarget == null ? null : newTarget.getId());
 	}
 
 	/**

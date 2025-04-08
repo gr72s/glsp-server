@@ -15,15 +15,6 @@
  ********************************************************************************/
 package com.gr72s.glsp.server.internal.util;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.params.provider.Arguments.arguments;
-
-import java.io.IOException;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.Stream;
-
 import com.gr72s.glsp.server.actions.Action;
 import com.gr72s.glsp.server.actions.RequestAction;
 import com.gr72s.glsp.server.actions.ResponseAction;
@@ -42,6 +33,15 @@ import com.gr72s.glsp.server.types.GLSPServerException;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+
+import java.io.IOException;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.stream.Stream;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 public class GenericsUtilTest {
 

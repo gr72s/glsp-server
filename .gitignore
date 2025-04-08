@@ -11,6 +11,7 @@ runbuild_dir
 .idea/compiler.xml
 .idea/dataSources.local.xml
 .idea/dataSources.xml
+.idea/workspace.xml
 .idea/libraries/
 *.iws
 *.iml
